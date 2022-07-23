@@ -3,7 +3,6 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const http = require('http');
-const dishRouter = require('./routes/dishRouter');
 
 //URL server informations
 const hostname = 'localhost';
@@ -15,8 +14,13 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-app.use('/dishes', dishRouter);
+const dishRouter = require('./routes/dishRouter');
+const promoRouter = require('./routes/promoRouter');
+const leaderRouter = require('./routes/leaderRouter');
 
+app.use('/dishes', dishRouter);
+app.use('/promos', promoRouter);
+app.use('/leaders', leaderRouter);
 
 app.use((req, res, next) => {
   console.log(req.headers);
